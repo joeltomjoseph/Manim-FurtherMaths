@@ -148,3 +148,27 @@ class Advice(Scene):
             ReplacementTransform(t4, t5, run_time=3)
         )
         self.wait()
+
+class Graph(GraphScene):
+    CONFIG = {
+        "x_min": -10,
+        "x_max": 10,
+        "y_min": -10,
+        "y_max": 10,
+        "graph_origin": ORIGIN
+    }
+    def construct(self):
+        self.setup_axes(animate=True)
+        func1 = self.get_graph(lambda x: x**3 - 3*x**2 - 2*x + 1, x_min=-2, x_max=4, color=BLUE)
+        func2 = self.get_graph(lambda x: x**2 +2, x_min=-3, x_max=3, color=RED)
+        func3 = self.get_graph(lambda x: np.sin(x)*np.log(x), x_min=0.5, x_max=10, color=GREEN)
+        t1 = TexMobject(r"f(x) = x^3 - 3x^2 - 2x + 1").set_color_by_gradient(BLUE_B, TEAL).scale(0.8)
+        t2 = TexMobject(r"f(x) = x^2 + 2").set_color_by_gradient(RED, MAROON)
+        t3 = TexMobject(r"f(x) = \sin{x} \cdot \log{x}").set_color_by_gradient(GREEN_B, GREEN_D)
+
+        self.play(ShowCreation(func1), run_time=3)
+        self.play(Write(t1.next_to(func1, UP + RIGHT)))
+        self.play(ShowCreation(func2), run_time=4)
+        self.play(Write(t2.next_to(func2, LEFT)))
+        self.play(ShowCreation(func3), run_time=3)
+        self.play(Write(t3.next_to(func3, DOWN)))
