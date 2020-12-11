@@ -4,7 +4,7 @@ from manimlib.imports import *
 import numpy as np
 
 # To watch one of these scenes, run the following:
-# python -m manim example_scenes.py SquareToCircle -pl
+# python -m manim FurtherMaths.py Open -pl
 #
 # Use the flag -l for a faster rendering at a lower
 # quality.
@@ -27,7 +27,7 @@ class Open(Scene):
         eq1 = TexMobject(r"f(x) = 3 \cdot f(x – 2) + 4")
         arrw = Arrow(np.array([-2,0,0]),np.array([2,0,0])).set_color_by_gradient(BLUE, GREEN)
         t6 = TextMobject("???    \n").to_edge(RIGHT).set_color(GREEN)
-        eq2 = TexMobject(r"\int_{0}^{\infty} sin(x^2) dx")
+        eq2 = TexMobject(r"\int_{0}^{\infty} sin(x^2) dx").set_color(RED)
 
         self.play(Write(tex.scale(2)), run_time=4)
         self.wait(4)
@@ -43,8 +43,10 @@ class Open(Scene):
         self.play(Write(t4.next_to(line, DOWN)))
         self.wait(1)
         self.play(Write(t5)), self.wait(2)
-        self.play(t5.to_edge, LEFT), self.wait(1)
-        self.play(Write(eq1.next_to(t5, DOWN)))
+        self.play(t5.to_edge, LEFT)
+        self.play(t5.shift, 0.5*UP)   
+        self.wait(1)         
+        self.play(Write(eq1.next_to(t5, 1*DOWN)))
 
         self.play(ShowCreation(arrw))
         self.play(Write(t6))
@@ -80,7 +82,7 @@ class Study(Scene):
         self.play(FadeOut(t1))
         self.wait(2)
         self.play(Write(t2.scale(1.5))), self.wait(1), self.play(Write(eq1[0:4].to_edge(UP + RIGHT)))
-        self.play(Write(t3.scale(1.5))), self.wait(1), self.play(Write(eq2.to_edge(3*RIGHT)))
+        self.play(Write(t3.scale(1.5))), self.wait(1), self.play(Write(eq2.to_edge(3*RIGHT).shift(0.5*UP)))
         self.play(Write(t4.scale(1.5))), self.wait(1), self.play(Write(eq3.to_edge(3*RIGHT + DOWN)))
         self.wait(2)
         self.play(ReplacementTransform(eq1[0].copy(), eq1_2[0].next_to(eq1[0], 1*DOWN)))
@@ -91,7 +93,7 @@ class Study(Scene):
         self.wait(1)
         self.play(ReplacementTransform(eq1[3].copy(), eq1_2[3].next_to(eq1_2[2], RIGHT)))
         self.wait(1)
-        self.play(ReplacementTransform(eq2.copy(), eq2_2.next_to(eq2, DOWN)))
+        self.play(ReplacementTransform(eq2.copy(), eq2_2.next_to(eq2, 1*DOWN)))
         self.wait(1)
         self.play(Transform(eq3, eq4.to_edge(3*RIGHT + DOWN)))
         self.wait(2)
@@ -122,4 +124,27 @@ class Study(Scene):
 
 class Advice(Scene):
     def construct(self):
-        t1 = TextMobject("Here's some advice...").set_color_by_gradient(ORANGE, BLUE)
+        t1 = TextMobject("Here's some advice...").set_color_by_gradient(ORANGE, BLUE).scale(2)
+        t2 = TextMobject("Further Maths is A LOT of work").scale(1.5)
+        t3 = TextMobject("1. Be Willing to work your best!").scale(1.5).set_color(BLUE_B)
+        t4 = TextMobject("2. Be Intrested in Maths!").scale(1.5).set_color(BLUE_B)
+        t5 = TextMobject("Be Intrested in whatever your doing!").scale(1.7).set_color_by_gradient(BLUE, MAROON)
+
+
+        self.play(Write(t1), run_time=4)
+        self.wait(2)
+        self.play(FadeOut(t1))
+        self.wait(1)
+        self.play(Write(t2))
+        self.wait(2)
+        self.play(FadeOut(t2))
+        self.wait(2)
+        self.play(Write(t3.shift(UP)))
+        self.wait(1)
+        self.play(Write(t4.shift(DOWN)))
+        self.wait(2)
+        self.play(
+            FadeOut(t3),
+            ReplacementTransform(t4, t5, run_time=3)
+        )
+        self.wait()
